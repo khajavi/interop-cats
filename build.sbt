@@ -35,6 +35,7 @@ lazy val root = project
   .in(file("."))
   .enablePlugins(ScalaJSPlugin)
   .aggregate(
+    docs,
     zioInteropCatsJVM,
     zioInteropCatsJS,
     zioInteropCatsTestsJVM,
@@ -167,3 +168,12 @@ lazy val coreOnlyTestJVM = coreOnlyTest.jvm.settings(dottySettings)
 lazy val coreOnlyTestJS = coreOnlyTest.js
   .settings(dottySettings)
   .settings(libraryDependencies += "io.github.cquiroz" %%% "scala-java-time" % scalaJavaTimeVersion % Test)
+  
+lazy val docs = project
+  .in(file("zio-interop-cats-docs"))
+  .settings(
+    publish / skip := true,
+    moduleName     := "zio-interop-cats-docs",
+    libraryDependencies ++= Seq("dev.zio" %% "zio" % zioVersion)
+  )
+  .enablePlugins(WebsitePlugin)
